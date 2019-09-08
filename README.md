@@ -36,6 +36,7 @@ Running these commmands clones the starter to a new folder on your maching, repl
 	- Chunking
 	- Minification
 	- Development server disk output for SPA with server side code
+- Browser compatibility through .browserslistrc and automatic polyfills with `babel`
 - Testing with Jest
 
 ## Guided tour
