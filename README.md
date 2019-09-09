@@ -9,35 +9,35 @@ git remote set-url [your project repository url]
 npm i
 npm run dev
 ```
-Running these commmands clones the starter to a new folder on your maching, replaces the endpoint so that you can start committing code, installs all dependencies and finally starts the dev server
+Running these commmands clones the starter to a new folder on your maching, replaces the endpoint so that you can start committing code, installs all dependencies and finally starts the dev server.
 
 ## Features
 - No global dependencies (everything in one package)
 - TypeScript with full type checks
 - Browser compatibility through .browserslistrc and automatic polyfills with `babel`
 - VSCode configurations for
-	- Auto linting
-	- Using local version of TypeScript
-	- Code snippets
+  - Auto linting
+  - Using local version of TypeScript
+  - Code snippets
 - TSLint with recommended rules
 - React
 - Redux
-	- Redux Sagas
-	- Duck pattern with code splitting on ducks
+  - Redux Sagas
+  - Duck pattern with code splitting on ducks
 - SASS support for awesome stylesheets
 - CSS Modules and global css (via `*.global.css`)
 - Source maps in dev and production (for debugging)
 - Import aliases based on `tsconfig.json` paths
 - Routing
-	- Code splitting pattern
-	- Error handling
+  - Code splitting pattern
+  - Error handling
 - Webpack bundling
-	- Production bundle `yarn build`
-	- Development server bundle `yarn dev`
-	- Analysis bundle `yarn build:analyze`
-	- Chunking
-	- Minification
-	- Development server disk output for SPA with server side code
+  - Production bundle `yarn build`
+  - Development server bundle `yarn dev`
+  - Analysis bundle `yarn build:analyze`
+  - Chunking
+  - Minification
+  - Development server disk output for SPA with server side code
 - Testing with Jest
 
 ## Guided tour
@@ -86,7 +86,10 @@ The DemoLogin feature is an example meant for you to remove once you clone the p
 Duck files are collections of action, action creators, reducers and selectors. They are meant to encompass a complete feature in the application in one (or more) files. This project follows the duck pattern described here: [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux) with a few additions:
 
 - Ducks MUST export a "duck" object matching the IDuckExport interface.
-- 
+
+
+#### Serve dist
+This project also has the ability to serve your SPA application directly from dist for testing. Simply run `npm run serve` to start this server.
 
 ## Advanced Scenarios
 
@@ -94,15 +97,15 @@ Duck files are collections of action, action creators, reducers and selectors. T
 Many projects want or need to inject code into the index page to populate the redux state of the application upon startup. These scenarios can be complex to set up for development environments as they will need to inject things into the `index.html` file. By default `webpack-dev-server` will not expose this file and will also alter script references so that it can do hot-reloading of changes. This project is set up to dump the final `index.html` file to disk during development so that a server can pick it up as a template, inject code and serve the page as it would any other page.
 
 ```
-		index.html
-				|
-				|
-				\/
+    index.html
+        |
+        |
+        \/
 server appends data
-				|
-				|
-				\/
-	output to client
+        |
+        |
+        \/
+  output to client
 ```
 
 To set up your dev server to support hot-reloading AND server injection simply point your server to read the `index.html` file outputted to the folder `dist-dev/`. You should also pick a different port for your server than the one used by `webpack-dev-server` (3010). Here is an example of a server setup you might use:
