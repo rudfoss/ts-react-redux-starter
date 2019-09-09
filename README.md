@@ -14,6 +14,7 @@ Running these commmands clones the starter to a new folder on your maching, repl
 ## Features
 - No global dependencies (everything in one package)
 - TypeScript with full type checks
+- Browser compatibility through .browserslistrc and automatic polyfills with `babel`
 - VSCode configurations for
 	- Auto linting
 	- Using local version of TypeScript
@@ -36,7 +37,6 @@ Running these commmands clones the starter to a new folder on your maching, repl
 	- Chunking
 	- Minification
 	- Development server disk output for SPA with server side code
-- Browser compatibility through .browserslistrc and automatic polyfills with `babel`
 - Testing with Jest
 
 ## Guided tour
@@ -64,6 +64,7 @@ This folder will be created once you build your application and will contain the
 This folder contains the output when you run the development server. If you are processing the `index.html` file through some server side code and updating its content (such as with server side rendering or passing initial redux state) you can read the file from here and get full use of hot-reloading from your server. See [Advanced Scenarios](#advanced-scenarios) for a more detailed explanation.
 
 ### Application Structure
+The application code is dividide into several foldes describing intent. 
 
 #### Code splitting
 This project attempts to, as far as possible, hide the intricacies of code splitting from features. A feature may simply return its API and the `StoreManager` and helper code will inject it as needed. This greatly simplifies building features as they do not need to know whether they are async or not.
@@ -81,6 +82,28 @@ Duck files are collections of action, action creators, reducers and selectors. T
 - 
 
 ## Advanced Scenarios
+
+### Server side state
+Many projects want or need to inject code into the index page to populate the redux state of the application upon startup. These scenarios can be complex to set up for development environments as they will need to inject things into the `index.html` file. By default `webpack-dev-server` will not expose this file and will also alter script references so that it can do hot-reloading of changes. This project is set up to dump the final `index.html` file to disk during development so that a server can pick it up as a template, inject code and serve the page as it would any other page.
+
+```
+		index.html
+				|
+				|
+				\/
+server appends data
+				|
+				|
+				\/
+	output to client
+```
+
+To set up your dev server to support hot-reloading AND server injection simply point your server to read the `index.html` file outputted to the folder `dist-dev/`. You should also pick a different port for your server than the one used by `webpack-dev-server` (3010). Here is an example of a server setup you might use:
+
+- your server @ port 3000 -> Serves all regular requests. Point your browser here to use your application.
+- webpack-dev-server @ port 3010 -> Serves hot-reloading scripts and other client side assets.
+
+With this setup you get both client-side hot-reloading as well as server-side injections.
 
 ## Notes
 

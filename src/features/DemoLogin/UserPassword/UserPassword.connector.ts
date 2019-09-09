@@ -1,5 +1,5 @@
 import { connect } from "react-redux"
-import { dispatchAction } from "../../../utils/connectorHelpers"
+import { dispatchAction } from "utils/connectorHelpers"
 import UserPassword, { IUserPasswordHandlers, IUserPasswordValues } from "./UserPassword"
 
 import * as duck from "../demoLogin.duck"

@@ -1,5 +1,5 @@
 import React from "react"
-import { inputValueExtractor } from "../../../utils/inputHelpers"
+import { inputValueExtractor } from "utils/inputHelpers"
 
 export interface IUserPasswordValues {
 	isLoggingIn: boolean

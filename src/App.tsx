@@ -4,9 +4,9 @@ const { hot } = require("react-hot-loader/root") // must do it this way because 
 import React from "react"
 import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
+import { storeManager } from "store"
+import { StoreManager } from "utils/StoreManager"
 import Routes from "./routes"
-import { storeManager } from "./store"
-import { StoreManager } from "./utils/StoreManager"
 
 import "./App.global.scss"
 

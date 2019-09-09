@@ -3,7 +3,7 @@
  * having to import from App and having cyclic dependencies.
  */
 
-import { StoreManager } from "../utils/StoreManager"
+import { StoreManager } from "utils/StoreManager"
 
 export const storeManager = new StoreManager()
 export const getStore = () => storeManager.store
