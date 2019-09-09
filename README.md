@@ -27,6 +27,7 @@ Running these commmands clones the starter to a new folder on your maching, repl
 - SASS support for awesome stylesheets
 - CSS Modules and global css (via `*.global.css`)
 - Source maps in dev and production (for debugging)
+- Import aliases based on `tsconfig.json` paths
 - Routing
 	- Code splitting pattern
 	- Error handling
@@ -64,7 +65,13 @@ This folder will be created once you build your application and will contain the
 This folder contains the output when you run the development server. If you are processing the `index.html` file through some server side code and updating its content (such as with server side rendering or passing initial redux state) you can read the file from here and get full use of hot-reloading from your server. See [Advanced Scenarios](#advanced-scenarios) for a more detailed explanation.
 
 ### Application Structure
-The application code is dividide into several foldes describing intent. 
+The application code is dividide into several foldes with a distinct purpose. This is not to say that this is the only structure you can use, but it is recommended based on several large projects as well as experience. Note that some of these paths are also aliases for import statements so if you change them you should also update the `paths` entry in `tsconfig.json`. Webpack and Jest aliases are created from that so don't worry about updating those.
+
+- `features` - The features folder is inteded to hold sub folders for distinct functionality in your application. The granularity of these features are up to you to define, but it is generally recommended to create several smaller features as opposed to one large one. Features are allowed to reference other features when required, though you do it sparingly.
+- `interfaces` - This folder contains some useful interfaces for describing useful objects that may be used throughout your application. Usually you would define your own interfaces within the feature they relate to.
+- `routes` - This is where the root `Routes` component lives. It is also the first point where code splitting is performed. Features may also define their own sub-routes with code splitting as needed, but this is the global route handler. Notice that you should not need to create additional files in this folder, simply append to the files already there and follow the pattern.
+- `store` - This is a standalone folder for getting the store manager. Any piece of code may access the store by importing from this folder `import { storeManager } from "store"`.
+- `utils` - The utils folder contains generic utils that may be used in any code. Utils should be independent of all other code as much as possible to encourage testing and clean code.
 
 #### Code splitting
 This project attempts to, as far as possible, hide the intricacies of code splitting from features. A feature may simply return its API and the `StoreManager` and helper code will inject it as needed. This greatly simplifies building features as they do not need to know whether they are async or not.
