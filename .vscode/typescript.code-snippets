@@ -1,0 +1,186 @@
+{
+	"index": {
+		"prefix": "index",
+		"description": "Creates index file with default component export",
+		"body": [
+			"import ${1:name} from \"./${1}\"",
+			"export default ${1}",
+			""
+		]
+	},
+	"index-duck": {
+		"prefix": "index-duck",
+		"description": "Creates index file with default component and duck export",
+		"body": [
+			"import ${1:component} from \"./${1}.connector\"",
+			"export * from \"./${2:duck}.duck\"",
+			"export default ${1}",
+			""
+		]
+	},
+	"connector": {
+		"prefix": "connector",
+		"description": "Creates react-redux connector",
+		"body": [
+			"import { connect } from \"react-redux\"",
+			"import ${1:component} from \"./${1}\"",
+			"",
+			"import * as ${2:duck} from \"./${2}.duck\"",
+			"",
+			"export default connect((state) => ({",
+			"\t${0:// Add state selectors here}",
+			"}), (dispatch) => ({",
+			"\t// Add dispatchers here",
+			"}))(${1})",
+			""
+		]
+	},
+	"duck": {
+		"prefix": "duck",
+		"description": "Creates a redux duck stub",
+		"body": [
+			"import { createAction, handleActions } from \"redux-actions\"",
+			"import { I${1}State } from \"./I${1}State\"",
+			"",
+			"const _ns = \"${2:namespace}\"",
+			"export const getState = (state: any): I${1}State => state[_ns] || {}",
+			"const action = (name: string, payload?: any) => createAction(`\\${_ns}/\\${name}`, payload) as any",
+			"",
+			"${0:// write actions and selectors here}",
+			"",
+			"const reducer = handleActions({",
+			"",
+			"}, {})",
+			"",
+			"export const duck = {",
+			"\t[_ns]: {",
+			"\t\treducer",
+			"\t}",
+			"}",
+			"",
+			"export default reducer",
+			""
+		]
+	},
+	"state-interface": {
+		"prefix": "state-interface",
+		"description": "Creates a state interface for a redux state where every field is optional by default",
+		"body": [
+			"interface I${1:component}StateFields {",
+			"\t${0}",
+			"}",
+			"",
+			"export interface I${1}State extends Partial<I${1}StateFields> { }",
+			""
+		]
+	},
+	
+	"react-class": {
+		"prefix": "react-class",
+		"description": "Class component without props",
+		"body":[
+			"import React from \"react\"",
+			"",
+			"export class ${1:name} extends React.PureComponent<{}> {",
+			"\tpublic render() {",
+			"\t\treturn (",
+			"\t\t\t<div>${3}</div>",
+			"\t\t)",
+			"\t}",
+			"}",
+			"export default ${1:name}",
+			""
+		]
+	},
+	"react-class-props": {
+		"prefix": "react-class-props",
+		"description": "Class component with exported props interface",
+		"body":[
+			"import React from \"react\"",
+			"",
+			"export interface I${1:name}Props {",
+			"\t${2}",
+			"}",
+			"",
+			"export class ${1:name} extends React.PureComponent<I${1:name}Props> {",
+			"\tpublic render() {",
+			"\t\treturn (",
+			"\t\t\t<div>${3}</div>",
+			"\t\t)",
+			"\t}",
+			"}",
+			"export default ${1:name}",
+			""
+		]
+	},
+	"react-class-extprops": {
+		"prefix": "react-class-extprops",
+		"description": "Class component with external IProps interface",
+		"body":[
+			"import React from \"react\"",
+			"import I${1:name}Props from \"./I${1:name}Props\"",
+			"",
+			"export class ${1:name} extends React.PureComponent<I${1:name}Props> {",
+			"\tpublic render() {",
+			"\t\treturn (",
+			"\t\t\t<div>${3}</div>",
+			"\t\t)",
+			"\t}",
+			"}",
+			"export default ${1:name}",
+			""
+		]
+	},
+	"react-class-typeprops": {
+		"prefix": "react-class-typeprops",
+		"description": "Class component with props from .types file",
+		"body":[
+			"import React from \"react\"",
+			"import {I${1:name}Props} from \"./${1:name}.types\"",
+			"",
+			"export class ${1:name} extends React.PureComponent<I${1:name}Props> {",
+			"\tpublic render() {",
+			"\t\treturn (",
+			"\t\t\t<div>${3}</div>",
+			"\t\t)",
+			"\t}",
+			"}",
+			"export default ${1:name}",
+			""
+		]
+	},
+	"react-func": {
+		"prefix": "react-func",
+		"description": "Functional component without props",
+		"body":[
+			"import React from \"react\"",
+			"",
+			"export const ${1:name}: React.FunctionComponent<{}> = () => {",
+			"\treturn (",
+			"\t\t<div>${3}</div>",
+			"\t)",
+			"}",
+			"export default ${1:name}",
+			""
+		]
+	},
+	"react-func-props": {
+		"prefix": "react-func-props",
+		"description": "Functional component with exported props interface",
+		"body":[
+			"import React from \"react\"",
+			"",
+			"export interface I${1:name}Props {",
+			"\t${2}",
+			"}",
+			"",
+			"export const ${1:name}: React.FunctionComponent<I${1:name}Props> = (props) => {",
+			"\treturn (",
+			"\t\t<div>${3}</div>",
+			"\t)",
+			"}",
+			"export default ${1:name}",
+			""
+		]
+	}
+}
