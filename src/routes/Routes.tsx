@@ -8,6 +8,7 @@ import { Link } from "react-router-dom"
 import { storeManager } from "store"
 import { lazyModules } from "./lazyModules"
 
+// Here you add a reference to each chunked feature you want to route to.
 const {
 	DemoLogin
 } = lazyModules(storeManager)
