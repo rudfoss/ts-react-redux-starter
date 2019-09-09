@@ -1,7 +1,7 @@
 {
   "name": "ts-react-redux-starter",
   "version": "1.0.0",
-  "description": "A complete project starter kit for a TypeScript React/Redux application with full support for code splitting and no hidden configs",
+  "description": "A complete project starter kit for a TypeScript React/Redux application with full support for code splitting and no hidden configs.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rudfoss/ts-react-redux-starter.git"
