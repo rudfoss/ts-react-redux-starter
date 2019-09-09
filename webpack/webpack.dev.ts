@@ -144,7 +144,8 @@ export default async () => {
 			}),
 			new HtmlHarddiskPlugin(),
 			new ForkTSCheckerPlugin({
-				tsconfig: TS_CONFIG_PATH
+				tsconfig: TS_CONFIG_PATH,
+				tslint: true
 			})
 		]
 	}

@@ -156,9 +156,6 @@ export default async () => {
 				filename: "styles/[name]-[contenthash].css",
 				chunkFilename: "styles/[name]-[contenthash].css"
 			}),
-			new ForkTSCheckerPlugin({
-				tsconfig: TS_CONFIG_PATH
-			}),
 			new BundleAnalyzerPlugin()
 		]
 	}
