@@ -4,6 +4,7 @@ import webpack from "webpack"
 import ForkTSCheckerPlugin from "fork-ts-checker-webpack-plugin"
 import HtmlPlugin from "html-webpack-plugin"
 import MiniCSSExtractPlugin from "mini-css-extract-plugin"
+import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import TerserPlugin from "terser-webpack-plugin"
 
 import { tsConfigPathsToWebpackAliases } from "./tsConfigPathsToWebpackAliases"
@@ -45,7 +46,8 @@ export default async () => {
 				new TerserPlugin({
 					sourceMap: true,
 					cache: CACHE
-				})
+				}),
+				new OptimizeCssAssetsPlugin({})
 			],
 			splitChunks: {
 				chunks: "all"
