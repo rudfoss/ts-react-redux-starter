@@ -14,18 +14,19 @@ Running these commmands clones the starter to a new folder on your maching, repl
 ## Features
 - No global dependencies (everything in one package)
 - TypeScript with full type checks
+- TSLint with recommended rules
 - Browser compatibility through .browserslistrc and automatic polyfills with `babel`
 - VSCode configurations for
   - Auto linting
   - Using local version of TypeScript
   - Code snippets
-- TSLint with recommended rules
-- React
-- Redux
+- React (duh)
+- Redux (also, duh)
   - Redux Sagas
   - Duck pattern with code splitting on ducks
-- SASS support for awesome stylesheets
-- CSS Modules and global css (via `*.global.css`)
+- CSS/SASS
+  - Modules and global css (via `*.global.css`)
+  - Autoprefixing for based on .browserslistrc ⭐
 - Source maps in dev and production (for debugging)
 - Import aliases based on `tsconfig.json` paths
 - Routing
