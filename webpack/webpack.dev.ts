@@ -33,6 +33,7 @@ export default async () => {
 			overlay: true,
 			inline: true,
 			port: 3010,
+			writeToDisk: true,
 			headers: {
 				"Access-Control-Allow-Origin": "*"
 			}
