@@ -52,7 +52,7 @@ export default async () => {
 		output: {
 			filename: "js/[name]-[hash].js",
 			chunkFilename: "js/[name]-[hash].js",
-			publicPath: "https://localhost:3010/",
+			publicPath: "/",
 			path: DIST_FOLDER
 		},
 		resolve: {
