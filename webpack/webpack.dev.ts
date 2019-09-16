@@ -2,6 +2,7 @@ import path from "path"
 import webpack from "webpack"
 import "webpack-dev-server" // Adds devServer types to configuration
 
+import autoprefixer from "autoprefixer"
 import ForkTSCheckerPlugin from "fork-ts-checker-webpack-plugin"
 import HtmlHarddiskPlugin from "html-webpack-harddisk-plugin"
 import HtmlPlugin from "html-webpack-plugin"
@@ -32,6 +33,7 @@ export default async () => {
 			https: true,
 			overlay: true,
 			inline: true,
+			writeToDisk: true,
 			port: 3010,
 			headers: {
 				"Access-Control-Allow-Origin": "*"
@@ -117,8 +119,16 @@ export default async () => {
 						{
 							loader: "css-loader",
 							options: {
-								importLoaders: 1, // How many loaders should be applied to imported resources before this one
+								importLoaders: 2, // How many loaders should be applied to imported resources before this one
 								modules: true
+							}
+						},
+						{
+							loader: "postcss-loader",
+							options: {
+								plugins: [
+									autoprefixer
+								]
 							}
 						},
 						{

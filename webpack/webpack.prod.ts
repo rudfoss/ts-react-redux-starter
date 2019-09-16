@@ -1,6 +1,9 @@
+// tslint:disable: no-console
+
 import path from "path"
 import webpack from "webpack"
 
+import autoprefixer from "autoprefixer"
 import ForkTSCheckerPlugin from "fork-ts-checker-webpack-plugin"
 import HtmlPlugin from "html-webpack-plugin"
 import MiniCSSExtractPlugin from "mini-css-extract-plugin"
@@ -20,6 +23,10 @@ const INDEX_JS_FILE = path.resolve(SRC_FOLDER, "index.ts")
 const INDEX_HTML_FILE = path.resolve(SRC_FOLDER, "index.html")
 const DIST_FOLDER = path.resolve(ROOT_FOLDER, "dist")
 const TS_CONFIG_PATH = path.resolve(ROOT_FOLDER, "tsconfig.json")
+
+console.log("========= AUTOPREFIXER ==========")
+console.log((autoprefixer as any).info())
+console.log("========= /AUTOPREFIXER ==========")
 
 export default async () => {
 	const alias = await tsConfigPathsToWebpackAliases(TS_CONFIG_PATH)
@@ -122,8 +129,16 @@ export default async () => {
 						{
 							loader: "css-loader",
 							options: {
-								importLoaders: 1, // How many loaders should be applied to imported resources before this one
+								importLoaders: 2, // How many loaders should be applied to imported resources before this one
 								modules: true
+							}
+						},
+						{
+							loader: "postcss-loader",
+							options: {
+								plugins: [
+									autoprefixer
+								]
 							}
 						},
 						{
