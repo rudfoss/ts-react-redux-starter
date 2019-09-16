@@ -9,16 +9,19 @@ import { IDuckExport } from "../../interfaces"
  */
 export class StoreManager {
 	public get store() {
+		if (!this._store) {
+			throw new Error("You must call createStore() on this instance before you can get the store.")
+		}
 		return this._store
 	}
 	public get state() {
-		return this._store.getState()
+		return this.store.getState()
 	}
 	public get dispatch() {
 		return this.store.dispatch
 	}
 
-	private _store: Store
+	private _store?: Store
 	/**
 	 * Map of all loaded reducers
 	 */
@@ -37,7 +40,6 @@ export class StoreManager {
 
 	public constructor() {
 		this.sagaMiddleware = createSagaMiddleware()
-		this._store = this.createStore({})
 	}
 
 	/**
@@ -110,8 +112,11 @@ If you did not change any of the sagas in the module you can keep working, but i
 		}
 	}
 	public createStore(initialState: {[key: string]: any} = {}) {
+		if (this._store) {
+			throw new Error("You can only create a store once. If you want to recreate it you must create a new StoreManager instance.")
+		}
 		const composer = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-		return createStore(
+		return this._store = createStore(
 			this.reducer, initialState, composer(applyMiddleware(this.sagaMiddleware))
 		)
 	}

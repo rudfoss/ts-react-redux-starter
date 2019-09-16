@@ -22,6 +22,7 @@ export class App extends React.PureComponent<{}, {internalMessage: string, showM
 	public constructor(props: {}) {
 		super(props)
 		this.storeManager = storeManager
+		this.storeManager.createStore({})
 		anyWindow.app = this
 	}
 
