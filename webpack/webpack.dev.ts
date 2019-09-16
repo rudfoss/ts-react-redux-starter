@@ -97,6 +97,16 @@ export default async () => {
 						"style-loader",
 						"css-loader",
 						{
+							loader: "postcss-loader",
+							options: {
+								ident: "postcss",
+								sourceMap: true,
+								plugins: [
+									require("autoprefixer")()
+								]
+							}
+						},
+						{
 							loader: "sass-loader",
 							options: {
 								sassOptions: {
@@ -119,6 +129,16 @@ export default async () => {
 							options: {
 								importLoaders: 1, // How many loaders should be applied to imported resources before this one
 								modules: true
+							}
+						},
+						{
+							loader: "postcss-loader",
+							options: {
+								ident: "postcss",
+								sourceMap: true,
+								plugins: [
+									require("autoprefixer")()
+								]
 							}
 						},
 						{
