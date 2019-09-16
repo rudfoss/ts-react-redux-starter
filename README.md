@@ -26,7 +26,7 @@ Running these commmands clones the starter to a new folder on your maching, repl
   - Duck pattern with code splitting on ducks
 - CSS/SASS
   - Modules and global css (via `*.global.css`)
-  - Autoprefixing for based on .browserslistrc ⭐
+  - Autoprefixing based on .browserslistrc ⭐
 - Source maps in dev and production (for debugging)
 - Import aliases based on `tsconfig.json` paths
 - Routing
