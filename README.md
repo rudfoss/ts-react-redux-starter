@@ -22,8 +22,10 @@ Running these commmands clones the starter to a new folder on your maching, repl
   - Code snippets
 - React (duh)
 - Redux (also, duh)
-  - Redux Sagas
+  - Redux Sagas for async actions
   - Duck pattern business logic [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux)
+- Code splitting
+  - Helper functions for handling code splitting using React.lazy
   - Add reducers and store keys at runtime
   - Add sagas at runtime
   - Add middleware at runtime ⭐
@@ -33,7 +35,7 @@ Running these commmands clones the starter to a new folder on your maching, repl
 - Source maps in dev and production (for debugging)
 - Import aliases based on `tsconfig.json` paths
 - Routing
-  - Code splitting pattern
+  - Code splitting pattern with helper function
   - Error handling
 - Webpack bundling
   - Production bundle `yarn build`
@@ -78,19 +80,46 @@ The application code is dividide into several foldes with a distinct purpose. Th
 - `utils` - The utils folder contains generic utils that may be used in any code. Utils should be independent of all other code as much as possible to encourage testing and clean code.
 
 #### Code splitting
-This project attempts to, as far as possible, hide the intricacies of code splitting from features. A feature may simply return its API and the `StoreManager` and helper code will inject it as needed. This greatly simplifies building features as they do not need to know whether they are async or not.
+This project attempts to, as far as possible, hide the intricacies of code splitting from features. A feature may simply return its API as normal and the surrounding code will ensure that dependencies are set up for it. This greatly simplifies building features as they do not need to know whether they are async or not. Features may still depend on other features both within the same chunk or other chunks.
+
+Code splitting can be tricky when redux is involved as there may be a need from the chunk of registering new reducers, sagas or even potentially middleware in the store. To facilitate this a utility class called `StoreManager` is provided. This class serves as a wrapper around a redux store and augments it with the ability to dynamically add reducers, sagas and middleware at runtime. In addition a helper function called `importChunk` is provided that works almost as a drop in replacement for `React.lazy` (it uses `lazy` internally). Given a `StoreManager` instance and an import function (like you would give `lazy`) it will load that component on demand and add any reducers, sagas and middleware to the store. You can then use the resulting component just like you would with simply calling `React.lazy`
+
+```tsx
+import React, { Suspense } from "react"
+import storeManager from "utils/StoreManager" // Get the store manager instance
+
+// Using React.lazy
+const LazyDemoLogin = React.lazy(() => import(/* webpackChunkName: "DemoLogin" */ "features/DemoLogin"))
+
+// Using importChunk
+const DemoLogin = importChunk(storeManager)(() => import(/* webpackChunkName: "DemoLogin" */ "features/DemoLogin"))
+
+// We can then use it as if it was any other lazy module
+export const Router = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <Switch>
+      <Route path="/" exact component={Home}/>
+      <Route path="/react-lazy" component={LazyDemoLogin}/>
+      <Route path="/import-chunk" component={DemoLogin}/>
+    </Switch>
+  </Suspense>
+)
+```
 
 #### DemoLogin feature
 The DemoLogin feature is an example meant for you to remove once you clone the project. It shows a simple implementation of:
 - Dynamically loaded components
 - Dynamically loaded ducks (with sagas)
+- Dynamically loaded middleware for logging
 - Sub-routing within a feature
 
 #### Ducks
 Duck files are collections of action, action creators, reducers and selectors. They are meant to encompass a complete feature in the application in one (or more) files. This project follows the duck pattern described here: [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux) with a few additions:
 
-- Ducks MUST export a "duck" object matching the IDuckExport interface.
+- Ducks CAN export a "duck" object matching the IDuckExport interface.
+- Ducks can also contain sagas and middlewares that may be dynamically added to the store when loaded.
 
+The default export of a duck must still be the reducer, but to support dynamic scenarios where code is injected as a result of, for example, code splitting it may also define a named export `duck` that should match the `IDuckExport` interface. If such an export is provided any defined reducer, saga or middleware will be automatically injected into the store.
 
 #### Serve dist
 This project also has the ability to serve your SPA application directly from dist for testing. Simply run `npm run serve` to start this server.
