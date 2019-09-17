@@ -146,7 +146,8 @@ If you did not change any of the sagas in the module you can keep working, but i
 
 	public createStore(initialState: {[key: string]: any} = {}) {
 		if (this._store) {
-			throw new Error("You can only create a store once. If you want to recreate it you must create a new StoreManager instance.")
+			throw new Error("You can only create a store once. If you want to recreate it you must create "+
+			"a new StoreManager instance.")
 		}
 		const devComposer = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 		this._store = createStore(
