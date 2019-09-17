@@ -1,4 +1,4 @@
-import { Reducer } from "redux"
+import { Middleware, Reducer } from "redux"
 import { ReduxCompatibleReducer } from "redux-actions"
 
 /**
@@ -13,4 +13,8 @@ export interface IDuck<TState = any, TAction = any> {
 	 * The root reducer for this duck if applicable.
 	 */
 	reducer?: Reducer | ReduxCompatibleReducer<TState, TAction>
+	/**
+	 * Add any additional middleware used by this module
+	 */
+	middleware?: {[key: string]: Middleware}
 }

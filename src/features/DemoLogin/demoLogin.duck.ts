@@ -93,7 +93,14 @@ const reducer = handleActions({
 export const duck: IDuckExport = {
 	[_ns]: {
 		saga,
-		reducer
+		reducer,
+		middleware: {
+			logger: () => (next) => (anAction) => {
+				// tslint:disable-next-line: no-console
+				console.log("LOGGER MIDDLEWARE", anAction)
+				next(anAction)
+			}
+		}
 	}
 }
 

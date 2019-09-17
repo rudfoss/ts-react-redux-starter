@@ -23,7 +23,10 @@ Running these commmands clones the starter to a new folder on your maching, repl
 - React (duh)
 - Redux (also, duh)
   - Redux Sagas
-  - Duck pattern with code splitting on ducks
+  - Duck pattern business logic [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux)
+  - Add reducers and store keys at runtime
+  - Add sagas at runtime
+  - Add middleware at runtime ⭐
 - CSS/SASS
   - Modules and global css (via `*.global.css`)
   - Autoprefixing based on .browserslistrc ⭐

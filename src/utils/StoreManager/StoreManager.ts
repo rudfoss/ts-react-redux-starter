@@ -1,4 +1,12 @@
-import { applyMiddleware, combineReducers, compose, createStore, Reducer, Store } from "redux"
+import {
+	applyMiddleware,
+	combineReducers,
+	compose,
+	createStore,
+	Middleware,
+	Reducer,
+	Store
+} from "redux"
 import { ReduxCompatibleReducer } from "redux-actions"
 import createSagaMiddleware, { SagaMiddleware } from "redux-saga"
 import { IDuckExport } from "../../interfaces"
@@ -36,10 +44,18 @@ export class StoreManager {
 	 */
 	private reducerKeysToRemove: string[] = []
 	private combinedReducer: Reducer = ((state: any) => state)
-	private sagaMiddleware: SagaMiddleware
+	private allMiddleware: {
+		saga: SagaMiddleware,
+		[key: string]: Middleware
+	}
+	private get sagaMiddleware() {
+		return this.allMiddleware.saga
+	}
 
 	public constructor() {
-		this.sagaMiddleware = createSagaMiddleware()
+		this.allMiddleware = {
+			saga: createSagaMiddleware()
+		}
 	}
 
 	/**
@@ -79,7 +95,8 @@ export class StoreManager {
 					// tslint:disable-next-line: no-console
 					console.warn(`A saga with key "${key}" already exists and was not added.
 This may occur if the hot-reload mechanism re-injects a dynamically loaded component with sagas.
-If you did not change any of the sagas in the module you can keep working, but if you did you must refresh the app for the saga to take effect.`)
+If you did not change any of the sagas in the module you can keep working, but if you did you must refresh the `+
+`app for the saga to take effect.`)
 				}
 				return
 			}
@@ -102,6 +119,9 @@ If you did not change any of the sagas in the module you can keep working, but i
 			if (duck.reducer) {
 				reducersByKey[key] = duck.reducer
 			}
+			if (duck.middleware) {
+				this.addMiddleware(duck.middleware)
+			}
 		}
 
 		if (Object.keys(reducersByKey).length > 0) {
@@ -111,14 +131,29 @@ If you did not change any of the sagas in the module you can keep working, but i
 			this.addSagas(sagasByKey)
 		}
 	}
+	/**
+	 * Add middleware to the store on the fly.
+	 * Middleware cannot be removed as they may have side effects that cannot be properly cleaned up.
+	 * @param middlewareByKey
+	 */
+	public addMiddleware(middlewareByKey: {[key: string]: Middleware}) {
+		this.allMiddleware = {
+			...this.allMiddleware,
+			...middlewareByKey
+		}
+		this.initMiddleware(Object.values(middlewareByKey))
+	}
+
 	public createStore(initialState: {[key: string]: any} = {}) {
 		if (this._store) {
 			throw new Error("You can only create a store once. If you want to recreate it you must create a new StoreManager instance.")
 		}
-		const composer = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-		return this._store = createStore(
-			this.reducer, initialState, composer(applyMiddleware(this.sagaMiddleware))
+		const devComposer = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+		this._store = createStore(
+			this.reducer, initialState, devComposer(applyMiddleware(this.middleware))
 		)
+		this.initMiddleware(Object.values(this.allMiddleware))
+		return this.store
 	}
 
 	/**
@@ -133,11 +168,24 @@ If you did not change any of the sagas in the module you can keep working, but i
 		}
 		return this.combinedReducer(state, action) // Pass call to combined reducer
 	}
+	private middleware = (store: any) => (next: any) => (action: any) => {
+		const chain = Object.values(this.allMiddleware).map((aMiddleware) => aMiddleware(store))
+		return (compose(...chain) as any)(next)(action)
+	}
 	/**
 	 * Rebuilds the reducer set. Must be called every time reducers are updated.
 	 */
 	private recombineReducers() {
 		return this.combinedReducer = combineReducers(this.reducers)
+	}
+	/**
+	 * Initializes all middleware by passing the store instance to them.
+	 * @param middlewares
+	 */
+	private initMiddleware(middlewares: Middleware[]) {
+		for (const middleware of middlewares) {
+			middleware(this.store)
+		}
 	}
 }
 

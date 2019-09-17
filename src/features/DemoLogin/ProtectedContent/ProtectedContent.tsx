@@ -28,6 +28,7 @@ export const ProtectedContent: React.FunctionComponent<IProtectedContentProps> =
 	({currentMessage, onCurrentMessageChange, messages, sendMessage}) => {
 	return (
 		<div className={styles.container}>
+			<p>Send a secure message by hitting <code>Ctrl+Enter</code></p>
 			<table className={styles.message}>
 				<tbody>
 					{messages.map(({timestamp, author, message}) => (

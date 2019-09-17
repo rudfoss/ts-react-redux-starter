@@ -26,6 +26,10 @@ export const UserPassword: React.FunctionComponent<IUserPasswordProps> = (props)
 
 	return (
 		<form action="GET" onSubmit={preventDefault(login)}>
+			<p>
+				Code splitting allows a feature to insert its own reducers, sagas and even middleware into the store at runtime.
+				Try logging in here with <code>admin</code> and <code>pass123</code>
+			</p>
 			{isLoginFailed && <p>Failed to log in. Please try again.</p>}
 			{!isLoggingIn && (
 				<>
