@@ -101,7 +101,7 @@ If you did not change any of the sagas in the module you can keep working, but i
 				return
 			}
 			this.sagaMiddleware.run(saga)
-			Object.assign(this.sagas, newSagasByKey)
+			Object.assign(this.sagas, {[key]: saga})
 		}
 	}
 	/**
