@@ -91,12 +91,12 @@ export class StoreManager {
 		for (const sagaEntry of Object.entries(newSagasByKey)) {
 			const [key, saga] = sagaEntry
 			if (this.sagas[key]) {
-				if (process.env.NODE_ENV) {
+				if (process.env.NODE_ENV === "development") {
 					// tslint:disable-next-line: no-console
-					console.warn(`A saga with key "${key}" already exists and was not added.
-This may occur if the hot-reload mechanism re-injects a dynamically loaded component with sagas.
-If you did not change any of the sagas in the module you can keep working, but if you did you must refresh the `+
-`app for the saga to take effect.`)
+					console.warn(`A saga with key "${key}" already exists and was not added.`+
+						"This may occur if the saga was added by multiple chunks or the hot-reload mechanism re-injects a "+
+						"dynamically loaded component with sagas. If you did not change any of the sagas in the module you "+
+						"can keep working, but if you did you must refresh the app for the saga to take effect.")
 				}
 				return
 			}
