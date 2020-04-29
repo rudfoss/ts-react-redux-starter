@@ -36,8 +36,8 @@ export default async () => {
 			writeToDisk: true,
 			port: 3010,
 			headers: {
-				"Access-Control-Allow-Origin": "*",
-			},
+				"Access-Control-Allow-Origin": "*"
+			}
 		},
 
 		entry: [
@@ -45,22 +45,22 @@ export default async () => {
 			"core-js/modules/es.promise",
 			"core-js/modules/es.array.iterator",
 
-			INDEX_JS_FILE,
+			INDEX_JS_FILE
 		],
 
 		output: {
 			filename: "js/[name]-[hash].js",
 			chunkFilename: "js/[name]-[hash].js",
 			publicPath: "https://localhost:3010/", // The last / is critical, without it reloading breaks
-			path: DIST_FOLDER,
+			path: DIST_FOLDER
 		},
 
 		resolve: {
 			extensions: [".js", ".ts", ".tsx"],
 			alias: {
 				"react-dom": "@hot-loader/react-dom", // https://github.com/gaearon/react-hot-loader#hot-loaderreact-dom
-				...alias,
-			},
+				...alias
+			}
 		},
 
 		module: {
@@ -80,20 +80,20 @@ export default async () => {
 										"@babel/preset-env", // Adds dynamic imports of the necessary polyfills (see .browserslistrc for spec)
 										{
 											useBuiltIns: "usage",
-											corejs: { version: 3, proposals: true },
-										},
+											corejs: { version: 3, proposals: true }
+										}
 									],
 									"@babel/preset-typescript",
-									"@babel/preset-react",
+									"@babel/preset-react"
 								],
 								plugins: [
 									["@babel/plugin-proposal-class-properties", { loose: true }],
 									"@babel/plugin-transform-runtime", // Adds support for async/await in older browsers
-									"react-hot-loader/babel",
-								],
-							},
-						},
-					],
+									"react-hot-loader/babel"
+								]
+							}
+						}
+					]
 				},
 				{
 					// Parses non-modular scss files
@@ -105,18 +105,18 @@ export default async () => {
 						{
 							loader: "postcss-loader",
 							options: {
-								plugins: [autoprefixer],
-							},
+								plugins: [autoprefixer]
+							}
 						},
 						{
 							loader: "sass-loader",
 							options: {
 								sassOptions: {
-									outputStyle: "compressed",
-								},
-							},
-						},
-					],
+									outputStyle: "compressed"
+								}
+							}
+						}
+					]
 				},
 				{
 					// Parses modular scss files
@@ -130,42 +130,42 @@ export default async () => {
 								importLoaders: 2, // How many loaders should be applied to imported resources before this one
 								modules: {
 									// localIdentName: "[path][name]_[local]" // Turn this on for full class names during debugging
-									getLocalIdent, // Turn this on for shortest possible class names
-								},
-							},
+									getLocalIdent // Turn this on for shortest possible class names
+								}
+							}
 						},
 						{
 							loader: "postcss-loader",
 							options: {
-								plugins: [autoprefixer],
-							},
+								plugins: [autoprefixer]
+							}
 						},
 						{
 							loader: "sass-loader",
 							options: {
 								sassOptions: {
-									outputStyle: "compressed",
-								},
-							},
-						},
-					],
-				},
-			],
+									outputStyle: "compressed"
+								}
+							}
+						}
+					]
+				}
+			]
 		},
 		plugins: [
 			new HtmlPlugin({
 				template: INDEX_HTML_FILE,
 				alwaysWriteToDisk: true,
-				minify: false,
+				minify: false
 			}),
 			new HtmlHarddiskPlugin(),
 			new ForkTSCheckerPlugin({
-				tsconfig: TS_CONFIG_PATH,
+				tsconfig: TS_CONFIG_PATH
 			}),
 			new DefinePlugin({
-				"process.env.NODE_ENV": JSON.stringify("development"),
-			}),
-		],
+				"process.env.NODE_ENV": JSON.stringify("development")
+			})
+		]
 	}
 
 	return config

@@ -40,7 +40,7 @@ export default async () => {
 			"core-js/modules/es.promise",
 			"core-js/modules/es.array.iterator",
 
-			INDEX_JS_FILE,
+			INDEX_JS_FILE
 		],
 
 		optimization: {
@@ -50,29 +50,29 @@ export default async () => {
 			minimizer: [
 				new TerserPlugin({
 					sourceMap: true,
-					cache: CACHE_ENABLED,
+					cache: CACHE_ENABLED
 				}),
 				new OptimizeCssAssetsPlugin({
 					cssProcessorPluginOptions: {
-						preset: ["default", { discardComments: { removeAll: true } }],
-					},
-				}),
+						preset: ["default", { discardComments: { removeAll: true } }]
+					}
+				})
 			],
 			splitChunks: {
-				chunks: "all",
-			},
+				chunks: "all"
+			}
 		},
 
 		output: {
 			// https://medium.com/@sahilkkrazy/hash-vs-chunkhash-vs-contenthash-e94d38a32208
 			filename: "js/[name]-[contenthash].js",
 			chunkFilename: "js/[name]-[contenthash].js",
-			path: DIST_FOLDER,
+			path: DIST_FOLDER
 		},
 
 		resolve: {
 			extensions: [".js", ".ts", ".tsx"],
-			alias,
+			alias
 		},
 
 		module: {
@@ -92,19 +92,19 @@ export default async () => {
 										{
 											useBuiltIns: "usage",
 											corejs: { version: 3, proposals: true },
-											debug: true,
-										},
+											debug: true
+										}
 									],
 									"@babel/preset-typescript",
-									"@babel/preset-react",
+									"@babel/preset-react"
 								],
 								plugins: [
 									["@babel/plugin-proposal-class-properties", { loose: true }],
-									"@babel/plugin-transform-runtime", // , // Adds support for async/await in older browsers
-								],
-							},
-						},
-					],
+									"@babel/plugin-transform-runtime" // , // Adds support for async/await in older browsers
+								]
+							}
+						}
+					]
 				},
 				{
 					// Parses non-modular scss files
@@ -112,24 +112,24 @@ export default async () => {
 					exclude: /node_modules/,
 					use: [
 						{
-							loader: MiniCSSExtractPlugin.loader,
+							loader: MiniCSSExtractPlugin.loader
 						},
 						"css-loader",
 						{
 							loader: "postcss-loader",
 							options: {
-								plugins: [autoprefixer],
-							},
+								plugins: [autoprefixer]
+							}
 						},
 						{
 							loader: "sass-loader",
 							options: {
 								sassOptions: {
-									outputStyle: "compressed",
-								},
-							},
-						},
-					],
+									outputStyle: "compressed"
+								}
+							}
+						}
+					]
 				},
 				{
 					// Parses modular scss files
@@ -137,34 +137,34 @@ export default async () => {
 					test: /\.s?css$/,
 					use: [
 						{
-							loader: MiniCSSExtractPlugin.loader,
+							loader: MiniCSSExtractPlugin.loader
 						},
 						{
 							loader: "css-loader",
 							options: {
 								importLoaders: 2, // How many loaders should be applied to imported resources before this one
 								modules: {
-									getLocalIdent,
-								},
-							},
+									getLocalIdent
+								}
+							}
 						},
 						{
 							loader: "postcss-loader",
 							options: {
-								plugins: [autoprefixer],
-							},
+								plugins: [autoprefixer]
+							}
 						},
 						{
 							loader: "sass-loader",
 							options: {
 								sassOptions: {
-									outputStyle: "compressed",
-								},
-							},
-						},
-					],
-				},
-			],
+									outputStyle: "compressed"
+								}
+							}
+						}
+					]
+				}
+			]
 		},
 		plugins: [
 			new HtmlPlugin({
@@ -175,20 +175,20 @@ export default async () => {
 					keepClosingSlash: true,
 					removeRedundantAttributes: true,
 					removeStyleLinkTypeAttributes: true,
-					useShortDoctype: true,
-				},
+					useShortDoctype: true
+				}
 			}),
 			new MiniCSSExtractPlugin({
 				filename: "styles/[name]-[contenthash].css",
-				chunkFilename: "styles/[name]-[contenthash].css",
+				chunkFilename: "styles/[name]-[contenthash].css"
 			}),
 			new ForkTSCheckerPlugin({
-				tsconfig: TS_CONFIG_PATH,
+				tsconfig: TS_CONFIG_PATH
 			}),
 			new DefinePlugin({
-				"process.env.NODE_ENV": JSON.stringify("development"),
-			}),
-		],
+				"process.env.NODE_ENV": JSON.stringify("development")
+			})
+		]
 	}
 
 	return config
