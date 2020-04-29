@@ -1,7 +1,16 @@
 # ts-react-redux-starter
+
 A complete project starter kit for a TypeScript React/Redux application with full support for code splitting and no hidden configs.
 
+## Latest changes
+
+- Updated dependencies and cleaned up webpack scripts.
+- Added eslint with TypeScript config (TSLint has been [deprecated](https://github.com/palantir/tslint#tslint)).
+- Added `start` alias for `dev` script. Start dev server with `npm start`.
+- Added placeholder types for import of `*.scss` and `*.json` files.
+
 ## Get started
+
 ```
 git clone https://github.com/rudfoss/ts-react-redux-starter.git [your project name]
 cd [your project name]
@@ -9,9 +18,11 @@ git remote set-url [your project repository url]
 npm i
 npm run dev
 ```
+
 Running these commmands clones the starter to a new folder on your maching, replaces the endpoint so that you can start committing code, installs all dependencies and finally starts the dev server.
 
 ## Features
+
 - No global dependencies (everything in one package)
 - TypeScript with full type checks
 - TSLint with recommended rules
@@ -47,9 +58,11 @@ Running these commmands clones the starter to a new folder on your maching, repl
 - Testing with Jest
 
 ## Guided tour
+
 This section explains every aspect of the starter kit in detail.
 
 ### Folder structure
+
 **`.vscode`**
 
 This folder contains settings specific to VSCode. For now it only specifies that we should use the local version of TypeScript and that we should autofix linting issues on save.
@@ -71,6 +84,7 @@ This folder will be created once you build your application and will contain the
 This folder contains the output when you run the development server. If you are processing the `index.html` file through some server side code and updating its content (such as with server side rendering or passing initial redux state) you can read the file from here and get full use of hot-reloading from your server. See [Advanced Scenarios](#advanced-scenarios) for a more detailed explanation.
 
 ### Application Structure
+
 The application code is dividide into several foldes with a distinct purpose. This is not to say that this is the only structure you can use, but it is recommended based on several large projects as well as experience. Note that some of these paths are also aliases for import statements so if you change them you should also update the `paths` entry in `tsconfig.json`. Webpack and Jest aliases are created from that so don't worry about updating those.
 
 - `features` - The features folder is inteded to hold sub folders for distinct functionality in your application. The granularity of these features are up to you to define, but it is generally recommended to create several smaller features as opposed to one large one. Features are allowed to reference other features when required, though you do it sparingly.
@@ -80,6 +94,7 @@ The application code is dividide into several foldes with a distinct purpose. Th
 - `utils` - The utils folder contains generic utils that may be used in any code. Utils should be independent of all other code as much as possible to encourage testing and clean code.
 
 #### Code splitting
+
 This project attempts to, as far as possible, hide the intricacies of code splitting from features. A feature may simply return its API as normal and the surrounding code will ensure that dependencies are set up for it. This greatly simplifies building features as they do not need to know whether they are async or not. Features may still depend on other features both within the same chunk or other chunks.
 
 Code splitting can be tricky when redux is involved as there may be a need from the chunk of registering new reducers, sagas or even potentially middleware in the store. To facilitate this a utility class called `StoreManager` is provided. This class serves as a wrapper around a redux store and augments it with the ability to dynamically add reducers, sagas and middleware at runtime. In addition a helper function called `importChunk` is provided that works almost as a drop in replacement for `React.lazy` (it uses `lazy` internally). Given a `StoreManager` instance and an import function (like you would give `lazy`) it will load that component on demand and add any reducers, sagas and middleware to the store. You can then use the resulting component just like you would with simply calling `React.lazy`
@@ -89,31 +104,38 @@ import React, { Suspense } from "react"
 import storeManager from "utils/StoreManager" // Get the store manager instance
 
 // Using React.lazy
-const LazyDemoLogin = React.lazy(() => import(/* webpackChunkName: "DemoLogin" */ "features/DemoLogin"))
+const LazyDemoLogin = React.lazy(() =>
+	import(/* webpackChunkName: "DemoLogin" */ "features/DemoLogin")
+)
 
 // Using importChunk
-const DemoLogin = importChunk(storeManager)(() => import(/* webpackChunkName: "DemoLogin" */ "features/DemoLogin"))
+const DemoLogin = importChunk(storeManager)(() =>
+	import(/* webpackChunkName: "DemoLogin" */ "features/DemoLogin")
+)
 
 // We can then use it as if it was any other lazy module
 export const Router = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <Switch>
-      <Route path="/" exact component={Home}/>
-      <Route path="/react-lazy" component={LazyDemoLogin}/>
-      <Route path="/import-chunk" component={DemoLogin}/>
-    </Switch>
-  </Suspense>
+	<Suspense fallback={<div>Loading...</div>}>
+		<Switch>
+			<Route path="/" exact component={Home} />
+			<Route path="/react-lazy" component={LazyDemoLogin} />
+			<Route path="/import-chunk" component={DemoLogin} />
+		</Switch>
+	</Suspense>
 )
 ```
 
 #### DemoLogin feature
+
 The DemoLogin feature is an example meant for you to remove once you clone the project. It shows a simple implementation of:
+
 - Dynamically loaded components
 - Dynamically loaded ducks (with sagas)
 - Dynamically loaded middleware for logging
 - Sub-routing within a feature
 
 #### Ducks
+
 Duck files are collections of action, action creators, reducers and selectors. They are meant to encompass a complete feature in the application in one (or more) files. This project follows the duck pattern described here: [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux) with a few additions:
 
 - Ducks CAN export a "duck" object matching the IDuckExport interface.
@@ -122,11 +144,13 @@ Duck files are collections of action, action creators, reducers and selectors. T
 The default export of a duck must still be the reducer, but to support dynamic scenarios where code is injected as a result of, for example, code splitting it may also define a named export `duck` that should match the `IDuckExport` interface. If such an export is provided any defined reducer, saga or middleware will be automatically injected into the store.
 
 #### Serve dist
+
 This project also has the ability to serve your SPA application directly from dist for testing. Simply run `npm run serve` to start this server.
 
 ## Advanced Scenarios
 
 ### Server side state
+
 Many projects want or need to inject code into the index page to populate the redux state of the application upon startup. These scenarios can be complex to set up for development environments as they will need to inject things into the `index.html` file. By default `webpack-dev-server` will not expose this file and will also alter script references so that it can do hot-reloading of changes. This project is set up to dump the final `index.html` file to disk during development so that a server can pick it up as a template, inject code and serve the page as it would any other page.
 
 ```
@@ -151,4 +175,5 @@ With this setup you get both client-side hot-reloading as well as server-side in
 ## Notes
 
 ### SASS dependency version locked
+
 The `sass` (dart-sass) dependency has been version locked due to a pre-release version being deployed without proper tagging. The pre-release version does not work correctly yet is automatically installed if you simply install the latest `sass`.
