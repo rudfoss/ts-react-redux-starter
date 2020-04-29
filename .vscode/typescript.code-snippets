@@ -1,4 +1,74 @@
 {
+	"index": {
+		"prefix": "index-default",
+		"description": "Scaffolds an index file for a feature that exports the default export of a component",
+		"body": [
+			"export { default } from \"./${1:component}\""
+		],
+		"scope": "typescript,javascript"
+	},
+	"index-duck": {
+		"prefix": "index-duck",
+		"description": "Creates index file with default component and duck export",
+		"body": [
+			"export { default } from \"./${1:component}.connector\"",
+			"export * from \"./${2:duck}.duck\""
+		]
+	},
+	"duck": {
+		"prefix": "duck",
+		"description": "Creates a redux duck stub",
+		"body": [
+			"import { createAction, handleActions } from \"redux-actions\"",
+			"import { I${1}State } from \"./I${1}State\"",
+			"",
+			"const _ns = \"${2:namespace}\"",
+			"export const getState = (state: any): I${1}State => state[_ns] || {}",
+			"const action = (name: string, payload?: any) => createAction(`\\${_ns}/\\${name}`, payload) as any",
+			"",
+			"${0:// write actions and selectors here}",
+			"",
+			"const reducer = handleActions({",
+			"",
+			"}, {})",
+			"",
+			"export const duck = {",
+			"\t[_ns]: {",
+			"\t\treducer",
+			"\t}",
+			"}",
+			"",
+			"export default reducer"
+		]
+	},
+	"state-interface": {
+		"prefix": "state-interface",
+		"description": "Creates a state interface for a redux state where every field is optional by default",
+		"body": [
+			"interface I${1:component}StateFields {",
+			"\t${0}",
+			"}",
+			"",
+			"export interface I${1}State extends Partial<I${1}StateFields> { }"
+		]
+	},
+	"react-connector": {
+		"prefix": "react-connector",
+		"description": "Creates react-redux connector",
+		"body": [
+			"import { connect } from \"react-redux\"",
+			"import ${1:component} from \"./${1}\"",
+			"",
+			"import * as ${2:duck} from \"./${2}.duck\"",
+			"",
+			"export default connect((state) => ({",
+			"\t${0:// Add state selectors here}",
+			"}), (dispatch) => ({",
+			"\t// Add dispatchers here",
+			"}))(${1})"
+		]
+	},
+
 	"react-ts-func": {
 		"prefix": "react-func",
 		"description": "Scaffolds a React TypeScript functional component",
@@ -68,51 +138,45 @@
 		],
 		"scope": "typescriptreact"
 	},
-	"test-react": {
-		"prefix": "test-react",
-		"description": "Scaffolds a React TypeScript test file for a specific component",
+
+	"react-ts-error": {
+		"prefix": "react-error",
+		"description": "Scaffolds a basic error boundary React class component",
 		"body": [
 			"import React from \"react\"",
-			"import { render } from \"@testing-library/react\"",
-			"import ${1:component} from \"./\"",
 			"",
-			"describe(\"${1}\", () => {",
-			"\tit(\"to be defined\", () => {",
-			"\t\texpect(${1}).toBeDefined()",
-			"\t})",
-			"\tit(\"${2:testName}\", () => {",
-			"\t\t${0}",
-			"\t})",
-			"})"
+			"interface IErrorBoundaryProps {",
+			"\tonError?: React.ElementType",
+			"}",
+			"",
+			"interface IErrorBoundaryState {",
+			"\thasError: boolean",
+			"}",
+			"",
+			"export class ${1:name} extends React.PureComponent<IErrorBoundaryProps, IErrorBoundaryState> {",
+			"\tpublic state: IErrorBoundaryState = {",
+			"\t\thasError: false",
+			"\t}",
+			"",
+			"\tpublic static getDerivedStateFromError() {",
+			"\t\treturn { hasError: true }",
+			"\t}",
+			"",
+			"\tpublic componentDidCatch(error: any) {",
+			"\t\tconsole.error(error)",
+			"\t}",
+			"",
+			"\tprivate renderError() {",
+			"\t\treturn <p>An error occured in this section. See console for details.</p>",
+			"\t}",
+			"",
+			"\tpublic render() {",
+			"\t\treturn !this.state.hasError ? this.props.children : this.props.onError || this.renderError()",
+			"\t}",
+			"}",
+			"",
+			"export default ${1:name}"
 		],
 		"scope": "typescriptreact"
-	},
-	"test-describe": {
-		"prefix": "test-describe",
-		"description": "Scaffolds a React test file for a specific component",
-		"body": [
-			"describe(\"${1:whatToTest}\", () => {",
-			"\t${0}",
-			"})"
-		],
-		"scope": "typescript,javascript,typescriptreact,javascriptreact"
-	},
-	"test-it": {
-		"prefix": "test-it",
-		"description": "Scaffolds an it function ",
-		"body": [
-			"it(\"${1:doesWhat}\", () => {",
-			"\t${0}",
-			"})"
-		],
-		"scope": "typescript,javascript,typescriptreact,javascriptreact"
-	},
-	"export-default": {
-		"prefix": "export-default",
-		"description": "Scaffolds an index file for a feature that exports the default export of a component",
-		"body": [
-			"export { default } from \"./${1:component}\""
-		],
-		"scope": "typescript,javascript"
 	}
 }
