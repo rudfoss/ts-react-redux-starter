@@ -2,12 +2,20 @@
 
 A complete project starter kit for a TypeScript React/Redux application with full support for code splitting and no hidden configs.
 
-## Latest changes
+## Changelog
+
+### 2020-04-29
 
 - Updated dependencies and cleaned up webpack scripts.
-- Added eslint with TypeScript config (TSLint has been [deprecated](https://github.com/palantir/tslint#tslint)).
+- Added ESLint and Prettier with TypeScript config (TSLint has been [deprecated](https://github.com/palantir/tslint#tslint)).
+- Slight cleanup in webpack configs.
+- Minified css module names using a deterministic string-incrementor.
 - Added `start` alias for `dev` script. Start dev server with `npm start`.
-- Added placeholder types for import of `*.scss` and `*.json` files.
+- Added placeholder types for import of `*.scss` and `*.json` files, no more TS complaints.
+- Added recommended extensions list.
+- Cleaned up snippets to promote functional components, added one for error boundaries.
+- Added support for alias paths in debug config.
+- Dropped support for IE10, [DING, DONG, the witch is dead](https://support.microsoft.com/en-us/help/4488955/support-ending-for-internet-explorer-10).
 
 ## Get started
 
