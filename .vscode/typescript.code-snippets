@@ -2,17 +2,13 @@
 	"index": {
 		"prefix": "index-default",
 		"description": "Scaffolds an index file for a feature that exports the default export of a component",
-		"body": [
-			"export { default } from \"./${1:component}\""
-		],
+		"body": ["export { default } from \"./${1:component}\""],
 		"scope": "typescript,javascript"
 	},
 	"index-connector": {
 		"prefix": "index-connector",
 		"description": "Scaffolds an index file for a feature that exports the default export of a connected component",
-		"body": [
-			"export { default } from \"./${1:component}.connector\""
-		],
+		"body": ["export { default } from \"./${1:component}.connector\""],
 		"scope": "typescript,javascript"
 	},
 	"index-duck": {
