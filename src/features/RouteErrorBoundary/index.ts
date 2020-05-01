@@ -1,2 +1,1 @@
-import RouteErrorBoundary from "./RouteErrorBoundary"
-export default RouteErrorBoundary
+export { default } from "./RouteErrorBoundary"

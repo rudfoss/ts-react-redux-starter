@@ -1,4 +1,4 @@
-.container{
+.container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -14,6 +14,7 @@
 	display: block;
 	flex: 0 0 120px;
 	margin-top: auto;
+
 	textarea {
 		width: 350px;
 	}

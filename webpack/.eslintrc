@@ -1,0 +1,21 @@
+{
+	"parser": "@typescript-eslint/parser",
+	"env": {
+		"node": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:prettier/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"plugins": ["prettier", "@typescript-eslint"],
+	"rules": {
+		"no-var": "error",
+		"no-extra-semi": "error",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/member-delimiter-style": "off",
+		"@typescript-eslint/interface-name-prefix": "off"
+	}
+}

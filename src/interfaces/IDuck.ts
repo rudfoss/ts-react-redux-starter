@@ -16,5 +16,5 @@ export interface IDuck<TState = any, TAction = any> {
 	/**
 	 * Add any additional middleware used by this module
 	 */
-	middleware?: {[key: string]: Middleware}
+	middleware?: { [key: string]: Middleware }
 }

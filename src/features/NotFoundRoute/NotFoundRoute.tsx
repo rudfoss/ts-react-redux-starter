@@ -1,6 +1,6 @@
 import React from "react"
 
-export const NotFoundRoute: React.FunctionComponent<{}> = () => {
+export const NotFoundRoute: React.FC = () => {
 	return (
 		<article>
 			<h1>404 - Not found</h1>

@@ -3,14 +3,14 @@
  * @param alphabet
  */
 export const newStringIncrementor = (
-	alphabet: string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 ) => {
 	const chars = alphabet.split("")
 	const alphabetLength = chars.length
-	let segmentIndices: number[] = [-1]
+	const segmentIndices: number[] = [-1]
 
 	const incrementIndices = (from: number) => {
-		let newIndex = segmentIndices[from] + 1
+		const newIndex = segmentIndices[from] + 1
 		if (newIndex >= alphabetLength) {
 			segmentIndices[from] = 0
 			if (from > 0) {

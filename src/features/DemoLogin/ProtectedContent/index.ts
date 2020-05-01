@@ -1,2 +1,1 @@
-import ProtectedContent from "./ProtectedContent.connector"
-export default ProtectedContent
+export { default } from "./ProtectedContent.connector"

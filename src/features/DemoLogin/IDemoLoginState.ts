@@ -16,4 +16,4 @@ interface IDemoLoginStateFields {
 	messages: IMessage[]
 }
 
-export interface IDemoLoginState extends Partial<IDemoLoginStateFields> { }
+export type IDemoLoginState = Partial<IDemoLoginStateFields>

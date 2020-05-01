@@ -1,2 +1,1 @@
-import UserPassword from "./UserPassword.connector"
-export default UserPassword
+export { default } from "./UserPassword.connector"

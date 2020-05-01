@@ -8,9 +8,9 @@ export interface IDemoLoginProps {
 	isAuthenticated: boolean
 }
 
-export const DemoLogin: React.FunctionComponent<IDemoLoginProps> = ({isAuthenticated}) => (
-	<Suspense fallback={<LoadingRoute/>}>
-		{isAuthenticated ? <ProtectedContent/> : <UserPassword/>}
+export const DemoLogin: React.FC<IDemoLoginProps> = ({ isAuthenticated }) => (
+	<Suspense fallback={<LoadingRoute />}>
+		{isAuthenticated ? <ProtectedContent /> : <UserPassword />}
 	</Suspense>
 )
 export default DemoLogin

@@ -1,2 +1,1 @@
-import NotFoundRoute from "./NotFoundRoute"
-export default NotFoundRoute
+export { default } from "./NotFoundRoute"
