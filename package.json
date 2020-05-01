@@ -29,7 +29,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "serve": "ws --port 3000 --https --directory ./dist --spa ./index.html",
-    "lint": "eslint src/** && eslint webpack/**"
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx src/ && eslint --ext .ts,.tsx,.js,.jsx webpack/"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
