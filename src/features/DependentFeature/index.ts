@@ -1,3 +1,2 @@
-import DependentFeature from "./DependentFeature.connector"
+export { default } from "./DependentFeature.connector"
 export * from "./dependentFeature.duck"
-export default DependentFeature

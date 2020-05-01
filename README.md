@@ -4,6 +4,13 @@ A complete project starter kit for a TypeScript React/Redux application with ful
 
 ## Changelog
 
+### 2020-05-01
+
+- Fixed inconsistent formatting.
+- Fixed non-working linters.
+- Linted all files.
+- Addded `lint` script, `npm run lint`
+
 ### 2020-04-29
 
 - Updated dependencies and cleaned up webpack scripts.

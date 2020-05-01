@@ -9,27 +9,28 @@ import { storeManager } from "store"
 import { lazyModules } from "./lazyModules"
 
 // Here you add a reference to each chunked feature you want to route to.
-const {
-	DemoLogin,
-	DependentFeature
-} = lazyModules(storeManager)
+const { DemoLogin, DependentFeature } = lazyModules(storeManager)
 
-export class Routes extends React.Component {
-	public render() {
-		return (
-			<RouteErrorBoundary>
-				<Link to="/">Home</Link>
-				<Suspense fallback={<LoadingRoute/>}>
-					<Switch>
-						<Route path="/" exact component={Home}/>
-						<Route path="/dependent" exact component={DependentFeature}/>
-						<Route path="/protected" component={DemoLogin}/>
-						<Route component={NotFoundRoute}/>
-					</Switch>
-				</Suspense>
-			</RouteErrorBoundary>
-		)
-	}
-}
+export const Routes: React.FC = () => (
+	<RouteErrorBoundary>
+		<Link to="/">Home</Link>
+		<Suspense fallback={<LoadingRoute />}>
+			<Switch>
+				<Route path="/" exact>
+					<Home />
+				</Route>
+				<Route path="/dependent" exact>
+					<DependentFeature />
+				</Route>
+				<Route path="/protected">
+					<DemoLogin />
+				</Route>
+				<Route>
+					<NotFoundRoute />
+				</Route>
+			</Switch>
+		</Suspense>
+	</RouteErrorBoundary>
+)
 
 export default Routes

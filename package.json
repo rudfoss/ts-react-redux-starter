@@ -28,7 +28,8 @@
     "build": "rimraf ./dist && cross-env TS_NODE_PROJECT=webpack/tsconfig.json webpack --config webpack/webpack.prod.ts --progress",
     "test": "jest",
     "test:watch": "jest --watch",
-    "serve": "ws --port 3000 --https --directory ./dist --spa ./index.html"
+    "serve": "ws --port 3000 --https --directory ./dist --spa ./index.html",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx src/ && eslint --ext .ts,.tsx,.js,.jsx webpack/"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -60,6 +61,7 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
     "fork-ts-checker-webpack-plugin": "^4.1.3",
     "html-webpack-harddisk-plugin": "^1.0.1",
     "html-webpack-plugin": "^4.2.1",

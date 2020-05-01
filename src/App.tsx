@@ -1,4 +1,4 @@
-// tslint:disable: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { hot } = require("react-hot-loader/root") // must do it this way because typings are incorrect
 
 import React from "react"
@@ -12,7 +12,10 @@ import "./App.global.scss"
 
 const anyWindow = window as any
 
-export class App extends React.PureComponent<{}, {internalMessage: string, showModule: boolean}> {
+export class App extends React.PureComponent<
+	{},
+	{ internalMessage: string; showModule: boolean }
+> {
 	public storeManager: StoreManager
 
 	public get environment() {
@@ -30,7 +33,7 @@ export class App extends React.PureComponent<{}, {internalMessage: string, showM
 		return (
 			<Provider store={this.storeManager.store}>
 				<BrowserRouter>
-					<Routes/>
+					<Routes />
 				</BrowserRouter>
 			</Provider>
 		)

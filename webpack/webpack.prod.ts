@@ -1,5 +1,3 @@
-// tslint:disable: no-console
-
 import path from "path"
 import webpack, { DefinePlugin } from "webpack"
 

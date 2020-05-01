@@ -5,7 +5,10 @@ interface IDependentFeatureProps {
 	changeLogin: () => void
 }
 
-export const DependentFeature: React.FunctionComponent<IDependentFeatureProps> = ({isAuthenticated, changeLogin}) => {
+export const DependentFeature: React.FunctionComponent<IDependentFeatureProps> = ({
+	isAuthenticated,
+	changeLogin
+}) => {
 	return (
 		<div>
 			This feature has a dependency on another feature that must be injected.

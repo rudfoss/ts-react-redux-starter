@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 
-const renderDots = (dotCount: number, dot: string = ".") => dot.repeat(dotCount)
+const renderDots = (dotCount: number, dot = ".") => dot.repeat(dotCount)
 
-export const LoadingRoute: React.FunctionComponent = () => {
+export const LoadingRoute: React.FC = () => {
 	const [dots, setDots] = useState(1)
 
 	useEffect(() => {
@@ -11,7 +11,7 @@ export const LoadingRoute: React.FunctionComponent = () => {
 	})
 
 	return (
-		<div style={{textAlign: "center"}}>
+		<div style={{ textAlign: "center" }}>
 			{renderDots(dots)} Loading {renderDots(dots)}
 		</div>
 	)

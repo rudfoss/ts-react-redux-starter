@@ -1,2 +1,1 @@
-import LoadingRoute from "./LoadingRoute"
-export default LoadingRoute
+export { default } from "./LoadingRoute"

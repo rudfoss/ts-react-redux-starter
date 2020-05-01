@@ -6,7 +6,8 @@ import { IDemoLoginState } from "./IDemoLoginState"
 
 const _ns = "demoLogin"
 export const getState = (state: any): IDemoLoginState => state[_ns] || {}
-const action = (name: string, payload?: any) => createAction(`${_ns}/${name}`, payload) as any
+const action = (name: string, payload?: any) =>
+	createAction(`${_ns}/${name}`, payload) as any
 
 export const getUsername = (state: any) => getState(state).username || ""
 export const getPassword = (state: any) => getState(state).password || ""
@@ -14,17 +15,36 @@ export const setUsername = action("SET_USERNAME")
 export const setPassword = action("SET_PASSWORD")
 
 export const getMessages = (state: any) => getState(state).messages || []
-export const getCurrentMessage = (state: any) => getState(state).currentMessage || ""
+export const getCurrentMessage = (state: any) =>
+	getState(state).currentMessage || ""
 export const setCurrentMessage = action("SET_CURRENT_MESSAGE")
-const insertMessage = action("INSERT_MESSAGE", (author: string, timestamp: number, message: string) =>
-	({author, timestamp, message})) // This is not a public action and is only used by internals
+const insertMessage = action(
+	"INSERT_MESSAGE",
+	(author: string, timestamp: number, message: string) => ({
+		author,
+		timestamp,
+		message
+	})
+) // This is not a public action and is only used by internals
 
-export const isAuthenticated = (state: any) => getState(state).authenticated || false
-export const isAuthenticating = (state: any) => getState(state).authenticating || false
-export const isAuthenticationFailed = (state: any) => getState(state).authenticationFailed || false
-export const setIsAuthenticating = action("SET_IS_AUTHENTICATING", (flag: boolean = true) => flag)
-export const setIsAuthenticated = action("SET_IS_AUTHENTICATED", (flag: boolean = true) => flag)
-export const setIsAuthenticationFailed = action("SET_IS_AUTHENTICATIONFAILED", (flag: boolean = true) => flag)
+export const isAuthenticated = (state: any) =>
+	getState(state).authenticated || false
+export const isAuthenticating = (state: any) =>
+	getState(state).authenticating || false
+export const isAuthenticationFailed = (state: any) =>
+	getState(state).authenticationFailed || false
+export const setIsAuthenticating = action(
+	"SET_IS_AUTHENTICATING",
+	(flag = true) => flag
+)
+export const setIsAuthenticated = action(
+	"SET_IS_AUTHENTICATED",
+	(flag = true) => flag
+)
+export const setIsAuthenticationFailed = action(
+	"SET_IS_AUTHENTICATIONFAILED",
+	(flag = true) => flag
+)
 
 export const doLogin = action("LOGIN")
 
@@ -57,38 +77,56 @@ function* saga() {
 	yield takeEvery(sendMessage, sendMessageSaga)
 }
 
-const reducer = handleActions({
-	[setUsername.toString()]: (state, {payload}: any): IDemoLoginState => ({
-		...state,
-		username: payload
-	}),
-	[setPassword.toString()]: (state, {payload}: any): IDemoLoginState => ({
-		...state,
-		password: payload
-	}),
+const reducer = handleActions(
+	{
+		[setUsername.toString()]: (state, { payload }: any): IDemoLoginState => ({
+			...state,
+			username: payload
+		}),
+		[setPassword.toString()]: (state, { payload }: any): IDemoLoginState => ({
+			...state,
+			password: payload
+		}),
 
-	[setIsAuthenticated.toString()]: (state, {payload}: any): IDemoLoginState => ({
-		...state,
-		authenticated: payload
-	}),
-	[setIsAuthenticating.toString()]: (state, {payload}: any): IDemoLoginState => ({
-		...state,
-		authenticating: payload
-	}),
-	[setIsAuthenticationFailed.toString()]: (state, {payload}: any): IDemoLoginState => ({
-		...state,
-		authenticationFailed: payload
-	}),
+		[setIsAuthenticated.toString()]: (
+			state,
+			{ payload }: any
+		): IDemoLoginState => ({
+			...state,
+			authenticated: payload
+		}),
+		[setIsAuthenticating.toString()]: (
+			state,
+			{ payload }: any
+		): IDemoLoginState => ({
+			...state,
+			authenticating: payload
+		}),
+		[setIsAuthenticationFailed.toString()]: (
+			state,
+			{ payload }: any
+		): IDemoLoginState => ({
+			...state,
+			authenticationFailed: payload
+		}),
 
-	[setCurrentMessage.toString()]: (state, {payload}: any): IDemoLoginState => ({
-		...state,
-		currentMessage: payload
-	}),
-	[insertMessage.toString()]: (state: IDemoLoginState, {payload}: any): IDemoLoginState => ({
-		...state,
-		messages: (state.messages || []).concat(payload)
-	})
-}, {})
+		[setCurrentMessage.toString()]: (
+			state,
+			{ payload }: any
+		): IDemoLoginState => ({
+			...state,
+			currentMessage: payload
+		}),
+		[insertMessage.toString()]: (
+			state: IDemoLoginState,
+			{ payload }: any
+		): IDemoLoginState => ({
+			...state,
+			messages: (state.messages || []).concat(payload)
+		})
+	},
+	{}
+)
 
 export const duck: IDuckExport = {
 	[_ns]: {
@@ -96,7 +134,6 @@ export const duck: IDuckExport = {
 		reducer,
 		middleware: {
 			logger: () => (next) => (anAction) => {
-				// tslint:disable-next-line: no-console
 				console.log("LOGGER MIDDLEWARE", anAction)
 				next(anAction)
 			}

@@ -4,5 +4,6 @@
 	"tabWidth": 2,
 	"useTabs": true,
 	"jsxSingleQuote": false,
-	"trailingComma": "none"
+	"trailingComma": "none",
+	"printWidth": 80
 }
